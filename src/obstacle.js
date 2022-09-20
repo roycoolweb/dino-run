@@ -1,12 +1,12 @@
 function addObs() {
     loop(1.7, () => {
         add([
-            pos(500, 100),
-            rect(20, 70),
-            color(255, 0, 0),
+            pos(width(), 210),
+            sprite("obstacle", { anim: "a" }),
             area(),
             body(),
-            "Object"
+            "Object",
+            { passed: false }
         ])
     })
 }
