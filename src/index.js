@@ -1,5 +1,29 @@
 import kaboom from "kaboom"
+import UAuth from '@uauth/js'
+
 const addObs = require('./obstacle')
+
+const uauth = new UAuth({
+    clientID: "72623414-8939-44c6-8ed4-953f9880e151",
+    redirectUri: "http://localhost:1234",
+})
+
+
+window.login = async () => {
+    try {
+        const authorization = await uauth.loginWithPopup()
+        console.log(authorization)
+
+        const header = document.getElementById("name");
+        header.innerText = authorization.idToken.sub;
+        
+        const login = document.getElementById("login")
+        login.className = "none"
+        go("game")
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 let score = 0;
 
@@ -91,5 +115,3 @@ scene("game", () => {
 
     addObs()
 })
-
-go("game")
