@@ -4,18 +4,23 @@ import UAuth from '@uauth/js'
 const addObs = require('./obstacle')
 
 const uauth = new UAuth({
-    clientID: "72623414-8939-44c6-8ed4-953f9880e151",
+    clientID: "",
     redirectUri: "http://localhost:1234",
 })
 
+let domain_sub = '';
+let wallet_address = '';
+let score = 0;
 
 window.login = async () => {
     try {
         const authorization = await uauth.loginWithPopup()
         console.log(authorization)
 
-        const header = document.getElementById("name");
-        header.innerText = authorization.idToken.sub;
+        const header = document.getElementById("name")
+        header.innerText = authorization.idToken.sub
+        domain_sub = authorization.idToken.sub
+        wallet_address = authorization.wallet_address
         
         const login = document.getElementById("login")
         login.className = "none"
@@ -24,8 +29,6 @@ window.login = async () => {
         console.error(error)
     }
 }
-
-let score = 0;
 
 kaboom({
     background: [255, 255, 255],
@@ -115,3 +118,16 @@ scene("game", () => {
 
     addObs()
 })
+
+function mintNFT() {
+    const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Authorization: ''},
+        body: '{"chain":"polygon","name":${domain_sub},"description":"Got ${score} scores","file_url":"Add your file URL here","mint_to_address":${wallet_address}}'
+      };
+      
+      fetch('https://api.nftport.xyz/v0/mints/easy/urls', options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
+}
