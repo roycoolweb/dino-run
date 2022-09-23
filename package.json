@@ -15,11 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tableland/sdk": "^3.1.2",
     "@uauth/js": "^2.4.0",
     "kaboom": "^2000.2.9"
   },
   "devDependencies": {
     "buffer": "^6.0.3",
+    "events": "^3.3.0",
     "parcel": "^2.7.0",
     "parcel-plugin-static-files-copy": "^2.6.0"
   }

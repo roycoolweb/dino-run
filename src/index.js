@@ -1,4 +1,5 @@
 import kaboom from "kaboom"
+import { connect } from "@tableland/sdk"
 import UAuth from '@uauth/js'
 
 const addObs = require('./obstacle')
@@ -11,6 +12,7 @@ const uauth = new UAuth({
 let domain_sub = '';
 let wallet_address = '';
 let score = 0;
+let table_name = "";
 
 window.login = async () => {
     try {
@@ -116,8 +118,45 @@ scene("game", () => {
         go("gameover")
     })
 
-    addObs()
+    addObs(score)
 })
+
+window.addScore = async () => {
+    const tableland = connect({ network: "testnet", chain: "polygon-mumbai" })
+    await tableland.siwe()
+
+    const name = await tableland.list()
+
+    if (name.length) {
+        table_name = name[0].name
+    } else {
+        const { name } = await tableland.create(
+            `id integer primary key, score text`,
+        )
+        table_name = name
+    }
+    
+    const writeRes = await tableland.write(`INSERT INTO ${table_name} (id, score) VALUES (0, '${score}');`)
+    console.log(writeRes)
+}
+
+function currentUser() {
+    uauth
+      .user()
+      .then(user => {
+        if(user){
+            const header = document.getElementById("name")
+            header.innerText = user.sub
+            domain_sub = user.sub
+            wallet_address = user.wallet_address
+            
+            const login = document.getElementById("login")
+            login.className = "none"
+            go("game")
+        }
+        console.log(user)
+      })
+}
 
 function mintNFT() {
     const options = {
@@ -131,3 +170,5 @@ function mintNFT() {
         .then(response => console.log(response))
         .catch(err => console.error(err));
 }
+
+currentUser()
