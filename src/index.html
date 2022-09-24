@@ -16,9 +16,18 @@
             Login with Unstoppable
         </button>
     </div>
-    <button class="btn btn-primary btn-lg" onclick="addScore()">
-        Save Score
-    </button>
+    <div id="end-game" class="none">
+        <div class="d-flex flex-column">
+            <h1 class="mb-3">Press Space to Start Over</h1>
+            <button class="btn btn-primary btn-lg mb-2" onclick="addScore()">
+                Save Score
+            </button>
+
+            <button class="btn btn-success btn-lg">
+                Mint Free NFT
+            </button>
+        </div>
+    </div>
     
     <script type="module" src="index.js"></script>
 </body>

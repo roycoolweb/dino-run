@@ -6,7 +6,14 @@
 .login-container {
     position: absolute;
     right: 50%;
-    top: 50%;
+    top: 40%;
+    transform: translate(50%, 50%);
+}
+
+.end-container {
+    position: absolute;
+    right: 50%;
+    top: 30%;
     transform: translate(50%, 50%);
 }
 

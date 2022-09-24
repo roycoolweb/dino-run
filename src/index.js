@@ -73,7 +73,12 @@ scene("gameover", () => {
         text("Game Over\n" + "Score:" + score)
     ])
 
+    const end_game = document.getElementById("end-game")
+    end_game.className = "end-container"
+
     keyPress("space", () => {
+        const end_game = document.getElementById("end-game")
+        end_game.className = "none"
         go("game")
     })
 })
