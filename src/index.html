@@ -12,6 +12,9 @@
     <h1 id="name" class="ud-name"></h1>
     <div id="login" class="login-container">
         <h1>Dino Run</h1>
+
+        <p>Help Dino jump to avoid obstacle and earn NFT</p>
+        
         <button class="btn btn-primary btn-lg" onclick="login()">
             Login with Unstoppable
         </button>
@@ -19,6 +22,11 @@
     <div id="end-game" class="none">
         <div class="d-flex flex-column">
             <h1 class="mb-3">Press Space to Start Over</h1>
+
+            <button class="btn btn-primary btn-lg mb-2" onclick="getScore()">
+                Get Score
+            </button>
+            
             <button class="btn btn-primary btn-lg mb-2" onclick="addScore()">
                 Save Score
             </button>

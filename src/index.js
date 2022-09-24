@@ -145,6 +145,32 @@ window.addScore = async () => {
     console.log(writeRes)
 }
 
+window.getScore = async () => {
+    const tableland = connect({ network: "testnet", chain: "polygon-mumbai" })
+    await tableland.siwe()
+
+    const name = await tableland.list()
+
+    if (name.length) {
+        table_name = name[0].name
+    } else {
+        const { name } = await tableland.create(
+            `id integer primary key, score text`,
+        )
+        table_name = name
+    }
+    
+    const { columns, rows } = await tableland.read(`SELECT * FROM ${table_name};`);
+
+    for (const [rowId, row] of Object.entries(rows)) {
+        console.log(`row: ${rowId}`);
+        for (const [colId, data] of Object.entries(row)) {
+          const { name } = columns[colId];
+          console.log(`  ${name}: ${data}`);
+        }
+      }
+}
+
 function currentUser() {
     uauth
       .user()
